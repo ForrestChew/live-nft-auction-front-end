@@ -24,12 +24,15 @@ const Bid = () => {
   };
   return (
     <>
-      <div className='flex justify-center'>
-        <form onSubmit={handleSubmit}>
-          <label className='block text-center mt-6'>
-            <p className='text-2xl mt-10'>Place Bid</p>
+      <div
+        className='input-container'
+        style={{ display: 'flex', flexDirection: 'column' }}
+      >
+        <form className='form' onSubmit={handleSubmit}>
+          <label>
+            <p>Place Bid</p>
             <input
-              className='text-black text-lg w-full mt-6 border-2 rounded-md'
+              className='input-box'
               type='number'
               value={bidAmount}
               onChange={handleFormInputChange}
@@ -40,15 +43,54 @@ const Bid = () => {
             />
           </label>
           <br></br>
-          <div className='text-center'>
+          <div>
             <button
-              className='border-2 rounded-lg mb-10 py-1 px-4 bg-red-500 border-red-500 '
+              className='btn'
+              style={{ marginBottom: '2.75rem' }}
               type='submit'
             >
               Submit
             </button>
           </div>
         </form>
+        <div className='table-container'>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th width='30%'>Current Bid:</th>
+                <th>{'0 ETH'}</th>
+              </tr>
+              <tr>
+                <th>Highest Bidder</th>
+                <th>{'0x'.padEnd(42, '0')}</th>
+              </tr>
+              <tr>
+                <th>NFT Factory address</th>
+                <th>{'0x'.padEnd(42, '0')}</th>
+              </tr>
+              <tr>
+                <th>NFT Seller</th>
+                <th>{'0x'.padEnd(42, '0')}</th>
+              </tr>
+              <tr>
+                <th>To Be Decided</th>
+                <th>{'Some random info'}</th>
+              </tr>
+              <tr>
+                <th>To Be Decided</th>
+                <th>{'Some random info'}</th>
+              </tr>
+              <tr>
+                <th>To Be Decided</th>
+                <th>{'Some random info'}</th>
+              </tr>
+              <tr>
+                <th>To Be Decided</th>
+                <th>{'Some random info'}</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
       </div>
     </>
   );
