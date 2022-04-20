@@ -1,42 +1,33 @@
 import CryptoLogin from './CryptoLogin';
+import '../styles/list-nft-container.css';
 
 const ListNftLoggedOut = () => {
   return (
     <>
-      <div className='z-0 flex flex-col justify-center items-center'>
-        <h1 className='text-4xl mt-10 text-center underline blur-lg select-none'>
-          List NFT
-        </h1>
+      <div className='input-container' style={{ filter: 'blur(0)' }}>
+        <h1 style={{ filter: 'blur(.75rem)' }}>List NFT</h1>
+        <CryptoLogin />
         <div>
-          <CryptoLogin />
-          <form className='blur-lg select-none'>
-            <label className='block text-center mt-12'>
-              <p className='text-2xl'>NFT Contract Address:</p>
-              <input
-                className='text-black text-lg mt-2 border-2 rounded-md'
-                size='30'
-                disabled
-              />
+          <form className='form' style={{ filter: 'blur(.75rem)' }}>
+            <label>
+              <p>NFT Contract Address:</p>
+              <input className='input-box' size='30' disabled />
             </label>
-            <label className='block text-center mt-12'>
-              <p className='text-2xl'>NFT ID</p>
-              <input
-                className='text-black text-lg mt-2 border-2 rounded-md placeholder:text-sm'
-                size='30'
-                disabled
-              />
+            <label>
+              <p>NFT ID</p>
+              <input className='input-box' size='30' disabled />
             </label>
             <label className='block text-center mt-12'>
               <p className='text-2xl'>Starting Price:</p>
-              <input
-                className='text-black text-lg mt-2 border-2 rounded-md placeholder:text-sm'
-                size='30'
-                disabled
-              />
+              <input className='input-box' size='30' disabled />
             </label>
             <br></br>
-            <div className='text-center mt-12'>
-              <button className='border-2 rounded-lg mb-10 py-2 px-6' disabled>
+            <div>
+              <button
+                style={{ backgroundColor: 'grey' }}
+                className='btn'
+                disabled
+              >
                 Submit
               </button>
             </div>
