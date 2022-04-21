@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import { useContext } from 'react';
 import { Context } from './Store';
 import { getAuthState } from './Store';
+import '../styles/list-nft-container.css';
 
 const CryptoLogin = () => {
   const [isAuthenticated, setIsAuthenticated] = useContext(Context);
@@ -19,14 +20,8 @@ const CryptoLogin = () => {
 
   return (
     <>
-      <div>
-        <button
-          id='login-btn'
-          className='z-10 absolute border-2 border-dotted rounded-md m-24 my-44 
-            px-12 py-4 hover:border-solid hover:scale-110 hover:bg-red-800 
-            bg-red-700 active:bg-black'
-          onClick={() => login()}
-        >
+      <div className='login-btn-container'>
+        <button className='login-btn' id='login-btn' onClick={() => login()}>
           Login
         </button>
       </div>
