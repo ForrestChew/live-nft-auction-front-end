@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from './Store';
 import Bid from './Bid';
 import BidLoggedOut from './BidLoggedOut';
