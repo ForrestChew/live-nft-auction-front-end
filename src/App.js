@@ -1,39 +1,58 @@
-import { useEffect, useState } from 'react';
-import Store from './components/Store';
+import { useState, useEffect } from 'react';
+import { useMoralisQuery, useMoralisSubscription } from 'react-moralis';
 import LiveAuction from './components/LiveAuction';
 import OfflineAuction from './components/OfflineAuction';
-import ChatBidSideBox from './components/ChatBidSideBox';
 import LoggedInComp from './components/LoggedInComp';
-import { ethers } from 'ethers';
-import contractAddress from './nft-auction-contract-info/contract-address';
-import abi from './nft-auction-contract-info/abi';
+import BidStatus from './components/BidStatus';
+import './styles/main.css';
 
-function App() {
+const App = () => {
   const [isAuctionActive, setIsAuctionActive] = useState(false);
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const contractInstance = new ethers.Contract(contractAddress, abi, signer);
+
+  // Listens for when a new auction state table is created in DB.
+  // That table will ultimatly have been created when the AuctionStarted
+  // event is emitted from the blockchain
+  useMoralisSubscription(
+    'AuctionStatus',
+    (query) => query.descending('createdAt').limit(1),
+    [],
+    {
+      live: true,
+      onCreate: (data) => {
+        const auctionState = data.attributes.started;
+        setIsAuctionActive(auctionState);
+      },
+    }
+  );
+
+  // Fetches latest auction state for when app is initialized
+  const { fetch } = useMoralisQuery(
+    'AuctionStatus',
+    (query) => query.descending('createdAt').limit(1),
+    []
+  );
 
   useEffect(() => {
-    // Listens for AuctionStatus event to be emitted. The boolean status will
-    // determine which components to display.
-    contractInstance.on('AuctionStatus', (status) => {
-      console.log(status);
-      setIsAuctionActive(status);
-    });
-    return () => contractInstance.off('AuctionStatus');
-  }, []);
+    const getAuctionStatus = async () => {
+      const results = await fetch();
+      try {
+        const auctionState = results[0].attributes.started;
+        setIsAuctionActive(auctionState);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAuctionStatus();
+  }, [fetch]);
 
   return (
     <>
-      <div className='flex'>
-        <Store>
-          {isAuctionActive ? <LiveAuction /> : <OfflineAuction />}
-          {isAuctionActive ? <ChatBidSideBox /> : <LoggedInComp />}
-        </Store>
+      <div className='main-container'>
+        {isAuctionActive ? <LiveAuction /> : <OfflineAuction />}
+        {isAuctionActive ? <BidStatus /> : <LoggedInComp />}
       </div>
     </>
   );
-}
+};
 
 export default App;
