@@ -1,6 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { Context, getAuthState } from './Store';
-import { ethers } from 'ethers';
+import { useContext } from 'react';
+import { Context } from './Store';
 import ListNftLoggedIn from './ListNftLoggedIn';
 import ListNftLoggedOut from './ListNftLoggedOut';
 
@@ -9,7 +8,7 @@ const LoggedInComp = () => {
 
   return (
     <>
-      <div className='flex border-2 basis-6/12 justify-center h-max-content mr-20 mt-10 bg-stone-700 text-white'>
+      <div>
         {isAuthenticated && <ListNftLoggedIn />}
         {!isAuthenticated && <ListNftLoggedOut />}
       </div>
