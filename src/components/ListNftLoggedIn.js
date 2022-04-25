@@ -10,7 +10,7 @@ const ListNftLoggedIn = () => {
     tokenFactoryAddr: '',
     tokenId: '',
     startingPrice: '',
-    userAddress: '',
+    nftSeller: '',
   });
   const { save } = useNewMoralisObject('ActiveNft');
   const createAuctionItemInDB = async (seller, nftFactoryAddr, id, price) => {
@@ -19,6 +19,8 @@ const ListNftLoggedIn = () => {
       NFTFactoryAddress: nftFactoryAddr,
       TokenId: id,
       NFTPrice: price,
+      HighestBidder: '',
+      ActiveNftIdxId: 0,
     };
     save(data, {
       onSuccess: (activeNft) => {
@@ -34,12 +36,6 @@ const ListNftLoggedIn = () => {
   // Auction owner fee of 0.01 ETH will automatically be applied, and is reflected in MetaMask.
   const handleSubmit = async (event) => {
     event.preventDefault();
-    createAuctionItemInDB(
-      listNftForm.userAddress,
-      listNftForm.tokenFactoryAddr,
-      listNftForm.tokenId,
-      listNftForm.startingPrice
-    );
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -60,6 +56,13 @@ const ListNftLoggedIn = () => {
       );
       const txReceipt = await txResponse.wait();
       console.log(txReceipt);
+      createAuctionItemInDB(
+        listNftForm.nftSeller,
+        listNftForm.tokenFactoryAddr,
+        listNftForm.tokenId,
+        listNftForm.startingPrice,
+        listNftForm.ActiveNftIdxId
+      );
     } catch (error) {
       console.log(error);
       console.log('Admin may have to delete entry from DB');
@@ -71,11 +74,11 @@ const ListNftLoggedIn = () => {
     const inputValue = e.target.value;
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const userAddress = await signer.getAddress();
+    const nftSeller = await signer.getAddress();
     setListNftForm({
       ...listNftForm,
       [inputName]: inputValue,
-      userAddress: userAddress,
+      nftSeller,
     });
   };
   const placeHolderInputAddr = '0x0000'.padEnd(20, '.');
