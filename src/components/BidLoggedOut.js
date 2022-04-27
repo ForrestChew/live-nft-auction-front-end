@@ -25,7 +25,11 @@ const BidLoggedOut = () => {
           <div>
             <button
               className='btn'
-              style={{ marginBottom: '2.75rem', cursor: 'auto' }}
+              style={{
+                marginBottom: '2.75rem',
+                cursor: 'auto',
+                backgroundColor: 'grey',
+              }}
               disabled
             >
               Submit
