@@ -15,7 +15,6 @@ const CryptoLogin = () => {
     await provider.send('eth_requestAccounts', []);
     const signer = provider.getSigner();
     setIsAuthenticated(getAuthState());
-    console.log('Log in button: ', await signer.getAddress());
   };
 
   return (
