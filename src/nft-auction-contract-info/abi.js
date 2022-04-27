@@ -21,14 +21,40 @@ const abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'seller',
+        name: 'bidder',
         type: 'address',
       },
+      { indexed: true, internalType: 'string', name: 'URI', type: 'string' },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'bidAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'NewBid',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       { indexed: false, internalType: 'string', name: 'URI', type: 'string' },
       {
         indexed: true,
         internalType: 'address',
+        name: 'seller',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'tokenFactoryAddr',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'highestBidder',
         type: 'address',
       },
       {
@@ -37,8 +63,14 @@ const abi = [
         name: 'price',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
     ],
-    name: 'NewAuctionListing',
+    name: 'NftForAuction',
     type: 'event',
   },
   {
@@ -145,11 +177,15 @@ const abi = [
     type: 'function',
   },
   {
-    inputs: [
-      { internalType: 'address', name: '_tokenFactoryAddr', type: 'address' },
-      { internalType: 'uint256', name: '_tokenId', type: 'uint256' },
-    ],
+    inputs: [],
     name: 'checkNftStatus',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'disableAuction',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -180,10 +216,7 @@ const abi = [
     type: 'function',
   },
   {
-    inputs: [
-      { internalType: 'address', name: '_tokenFactoryAddr', type: 'address' },
-      { internalType: 'uint256', name: '_tokenId', type: 'uint256' },
-    ],
+    inputs: [],
     name: 'placeBid',
     outputs: [],
     stateMutability: 'payable',
