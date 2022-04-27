@@ -1,5 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useMoralisQuery, useMoralisSubscription } from 'react-moralis';
+import { useState, useEffect, useContext } from 'react';
+import {
+  useMoralisQuery,
+  useMoralisSubscription,
+  useMoralis,
+} from 'react-moralis';
 import LiveAuction from './components/LiveAuction';
 import OfflineAuction from './components/OfflineAuction';
 import LoggedInComp from './components/LoggedInComp';
@@ -8,6 +12,49 @@ import './styles/main.css';
 
 const App = () => {
   const [isAuctionActive, setIsAuctionActive] = useState(false);
+
+  const { Moralis } = useMoralis();
+
+  //   Creates a blank slate in DB in preparation for the next auction.
+  const deleteAuctionStatusRows = async () => {
+    // Removes all "AuctionStatus" rows
+    const AuctionStatus = Moralis.Object.extend('AuctionStatus');
+    const auctionStatusQuery = new Moralis.Query(AuctionStatus);
+    const auctionStatus = await auctionStatusQuery.find();
+    await auctionStatus.forEach((row) => {
+      row.destroy();
+    });
+  };
+
+  // Removes all "NewBids" rows
+  const deleteNewBidsRows = async () => {
+    const NewBids = Moralis.Object.extend('NewBids');
+    const newBidsQuery = new Moralis.Query(NewBids);
+    const newBids = await newBidsQuery.find();
+    await newBids.forEach((row) => {
+      row.destroy();
+    });
+  };
+
+  // Removes all "NftForAuction" rows
+  const deleteNftForAuctionRows = async () => {
+    const NftForAuction = Moralis.Object.extend('NftForAuction');
+    const nftForAuctionQuery = new Moralis.Query(NftForAuction);
+    const nftForAuction = await nftForAuctionQuery.find();
+    await nftForAuction.forEach((row) => {
+      row.destroy();
+    });
+  };
+
+  // Removes all "NftSale" rows
+  const deleteNftSaleRows = async () => {
+    const NftSale = Moralis.Object.extend('NftSale');
+    const nftSaleQuery = new Moralis.Query(NftSale);
+    const nftSale = await nftSaleQuery.find();
+    await nftSale.forEach((row) => {
+      row.destroy();
+    });
+  };
 
   // Listens for when a new auction state table is created in DB.
   // That table will ultimatly have been created when the AuctionStarted
@@ -21,6 +68,12 @@ const App = () => {
       onCreate: (data) => {
         const auctionState = data.attributes.started;
         setIsAuctionActive(auctionState);
+        if (!auctionState) {
+          deleteAuctionStatusRows();
+          deleteNewBidsRows();
+          deleteNftForAuctionRows();
+          deleteNftSaleRows();
+        }
       },
     }
   );
