@@ -4,7 +4,7 @@ import ListNftLoggedIn from './ListNftLoggedIn';
 import ListNftLoggedOut from './ListNftLoggedOut';
 
 const LoggedInComp = () => {
-  const [isAuthenticated, setIsAuthenticated] = useContext(Context);
+  const [isAuthenticated] = useContext(Context);
 
   return (
     <>
