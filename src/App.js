@@ -21,7 +21,7 @@ const App = () => {
     const AuctionStatus = Moralis.Object.extend('AuctionStatus');
     const auctionStatusQuery = new Moralis.Query(AuctionStatus);
     const auctionStatus = await auctionStatusQuery.find();
-    await auctionStatus.forEach((row) => {
+    auctionStatus.forEach((row) => {
       row.destroy();
     });
   };
@@ -31,7 +31,7 @@ const App = () => {
     const NewBids = Moralis.Object.extend('NewBids');
     const newBidsQuery = new Moralis.Query(NewBids);
     const newBids = await newBidsQuery.find();
-    await newBids.forEach((row) => {
+    newBids.forEach((row) => {
       row.destroy();
     });
   };
@@ -41,7 +41,7 @@ const App = () => {
     const NftForAuction = Moralis.Object.extend('NftForAuction');
     const nftForAuctionQuery = new Moralis.Query(NftForAuction);
     const nftForAuction = await nftForAuctionQuery.find();
-    await nftForAuction.forEach((row) => {
+    nftForAuction.forEach((row) => {
       row.destroy();
     });
   };
@@ -51,7 +51,7 @@ const App = () => {
     const NftSale = Moralis.Object.extend('NftSale');
     const nftSaleQuery = new Moralis.Query(NftSale);
     const nftSale = await nftSaleQuery.find();
-    await nftSale.forEach((row) => {
+    nftSale.forEach((row) => {
       row.destroy();
     });
   };
