@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import {
   useMoralisQuery,
   useMoralisSubscription,
@@ -58,7 +58,7 @@ const App = () => {
 
   // Listens for when a new auction state table is created in DB.
   // That table will ultimatly have been created when the AuctionStarted
-  // event is emitted from the blockchain
+  // event is emitted from the auction smart contract
   useMoralisSubscription(
     'AuctionStatus',
     (query) => query.descending('createdAt').limit(1),
