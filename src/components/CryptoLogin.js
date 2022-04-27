@@ -5,7 +5,8 @@ import { getAuthState } from './Store';
 import '../styles/list-nft-container.css';
 
 const CryptoLogin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useContext(Context);
+  // eslint-disable-next-line
+  const [isAucthenticated, setIsAuthenticated] = useContext(Context);
 
   // Opens Metamask in browser
   const login = async () => {
@@ -13,7 +14,6 @@ const CryptoLogin = () => {
     document.getElementById('login-btn').disabled = true;
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send('eth_requestAccounts', []);
-    const signer = provider.getSigner();
     setIsAuthenticated(getAuthState());
   };
 
