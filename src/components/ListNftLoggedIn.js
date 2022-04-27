@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ethers } from 'ethers';
-import { useNewMoralisObject, useMoralisQuery } from 'react-moralis';
 import contractAddress from '../nft-auction-contract-info/contract-address';
 import abi from '../nft-auction-contract-info/abi';
 import '../styles/list-nft-container.css';
@@ -12,25 +11,6 @@ const ListNftLoggedIn = () => {
     startingPrice: '',
     nftSeller: '',
   });
-  const { save } = useNewMoralisObject('ActiveNft');
-  const createAuctionItemInDB = async (seller, nftFactoryAddr, id, price) => {
-    const data = {
-      NFTSeller: seller,
-      NFTFactoryAddress: nftFactoryAddr,
-      TokenId: id,
-      NFTPrice: price,
-      HighestBidder: '',
-      ActiveNftIdxId: 0,
-    };
-    save(data, {
-      onSuccess: (activeNft) => {
-        console.log(activeNft);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    });
-  };
 
   // Calls the listNftForAuction function within smart contract when form is submitted.
   // Auction owner fee of 0.01 ETH will automatically be applied, and is reflected in MetaMask.
@@ -46,26 +26,16 @@ const ListNftLoggedIn = () => {
       );
       let txOptions = {
         value: ethers.utils.parseEther('0.01'),
-        gasLimit: 325000,
+        gasLimit: 1000000,
       };
-      const txResponse = await contractInstance.listNftForAuction(
+      await contractInstance.listNftForAuction(
         listNftForm.tokenFactoryAddr,
         listNftForm.tokenId,
         ethers.utils.parseEther(listNftForm.startingPrice),
         txOptions
       );
-      const txReceipt = await txResponse.wait();
-      console.log(txReceipt);
-      createAuctionItemInDB(
-        listNftForm.nftSeller,
-        listNftForm.tokenFactoryAddr,
-        listNftForm.tokenId,
-        listNftForm.startingPrice,
-        listNftForm.ActiveNftIdxId
-      );
     } catch (error) {
       console.log(error);
-      console.log('Admin may have to delete entry from DB');
     }
   };
 
@@ -85,7 +55,7 @@ const ListNftLoggedIn = () => {
   return (
     <>
       <div className='input-container'>
-        <h1>List NFT</h1>
+        <h1 style={{ textDecoration: 'underline' }}>List NFT</h1>
         <form onSubmit={handleSubmit} className='form'>
           <label>
             <p>NFT Contract Address:</p>
