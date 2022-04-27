@@ -115,6 +115,7 @@ const Bid = () => {
       setAuctionNft();
       hasFetchedData.current = true;
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
