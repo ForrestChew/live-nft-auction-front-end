@@ -5,15 +5,15 @@ import { MoralisProvider } from 'react-moralis';
 import App from './App';
 
 const serverUrl = process.env.REACT_APP_MORALIS_SERVER_URL;
-const appId = process.env.REACT_APP_MORALIS_ID;
+const appId = process.env.REACT_APP_MORALIS_APP_ID;
 
 ReactDOM.render(
   <React.StrictMode>
-    <MoralisProvider serverUrl={serverUrl} appId={appId}>
-      <Store>
+    <Store>
+      <MoralisProvider serverUrl={serverUrl} appId={appId}>
         <App />
-      </Store>
-    </MoralisProvider>
+      </MoralisProvider>
+    </Store>
   </React.StrictMode>,
   document.getElementById('root')
 );
