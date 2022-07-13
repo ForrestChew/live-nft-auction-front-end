@@ -1,0 +1,36 @@
+.form-title {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  align-items: center;
+  word-wrap: break-word;
+}
+
+.input-box {
+  min-width: 10;
+  border: none;
+  border-radius: 0.2rem;
+}
+
+.btn {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  background-color: crimson;
+}
+
+.table {
+  margin-top: 5.75rem;
+  word-break: break-all;
+}
+
+th {
+  padding: 0.84rem;
+  border: 1px solid white;
+}

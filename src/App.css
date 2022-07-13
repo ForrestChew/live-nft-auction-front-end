@@ -1,0 +1,13 @@
+body {
+  margin: 0px;
+}
+#root {
+  height: 100vh;
+  background-color: #292524;
+}
+
+.auction {
+  display: grid;
+  grid-template-columns: 3% 53.375% 25%;
+  gap: 5%;
+}

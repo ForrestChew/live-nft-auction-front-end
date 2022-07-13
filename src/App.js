@@ -1,111 +1,52 @@
-import { useState, useEffect } from 'react';
-import {
-  useMoralisQuery,
-  useMoralisSubscription,
-  useMoralis,
-} from 'react-moralis';
-import LiveAuction from './components/LiveAuction';
-import OfflineAuction from './components/OfflineAuction';
-import LoggedInComp from './components/LoggedInComp';
-import BidStatus from './components/BidStatus';
-import './styles/main.css';
+import { useEffect, useContext } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useMoralisQuery } from "react-moralis";
+import { AuctionContext } from "./AuctionProvider";
+import Navbar from "./components/navbar/Navbar";
+import OptionsBox from "./components/options-box/OptionsBox";
+import MainDisplay from "./components/main-display/MainDisplay";
+import Profile from "./pages/profile/Profile";
+import "./App.css";
 
-const App = () => {
-  const [isAuctionActive, setIsAuctionActive] = useState(false);
+function App() {
+  const [isAuctionActive, setIsAuctionActive] = useContext(AuctionContext);
 
-  const { Moralis } = useMoralis();
-
-  //   Creates a blank slate in DB in preparation for the next auction.
-  const deleteAuctionStatusRows = async () => {
-    // Removes all "AuctionStatus" rows
-    const AuctionStatus = Moralis.Object.extend('AuctionStatus');
-    const auctionStatusQuery = new Moralis.Query(AuctionStatus);
-    const auctionStatus = await auctionStatusQuery.find();
-    auctionStatus.forEach((row) => {
-      row.destroy();
-    });
-  };
-
-  // Removes all "NewBids" rows
-  const deleteNewBidsRows = async () => {
-    const NewBids = Moralis.Object.extend('NewBids');
-    const newBidsQuery = new Moralis.Query(NewBids);
-    const newBids = await newBidsQuery.find();
-    newBids.forEach((row) => {
-      row.destroy();
-    });
-  };
-
-  // Removes all "NftForAuction" rows
-  const deleteNftForAuctionRows = async () => {
-    const NftForAuction = Moralis.Object.extend('NftForAuction');
-    const nftForAuctionQuery = new Moralis.Query(NftForAuction);
-    const nftForAuction = await nftForAuctionQuery.find();
-    nftForAuction.forEach((row) => {
-      row.destroy();
-    });
-  };
-
-  // Removes all "NftSale" rows
-  const deleteNftSaleRows = async () => {
-    const NftSale = Moralis.Object.extend('NftSale');
-    const nftSaleQuery = new Moralis.Query(NftSale);
-    const nftSale = await nftSaleQuery.find();
-    nftSale.forEach((row) => {
-      row.destroy();
-    });
-  };
-
-  // Listens for when a new auction state table is created in DB.
-  // That table will ultimatly have been created when the AuctionStarted
-  // event is emitted from the auction smart contract
-  useMoralisSubscription(
-    'AuctionStatus',
-    (query) => query.descending('createdAt').limit(1),
-    [],
-    {
-      live: true,
-      onCreate: (data) => {
-        const auctionState = data.attributes.started;
-        setIsAuctionActive(auctionState);
-        if (!auctionState) {
-          deleteAuctionStatusRows();
-          deleteNewBidsRows();
-          deleteNftForAuctionRows();
-          deleteNftSaleRows();
-        }
-      },
-    }
-  );
-
-  // Fetches latest auction state for when app is initialized
-  const { fetch } = useMoralisQuery(
-    'AuctionStatus',
-    (query) => query.descending('createdAt').limit(1),
-    []
-  );
+  // Gets the data from the "auctionStatus" class within the Moralis DB.
+  const { data, isLoading } = useMoralisQuery("auctionStatus", (q) => q, [], {
+    onCreate: () => setAuctionStatus(),
+    onDelete: () => setAuctionStatus(),
+    live: true,
+  });
 
   useEffect(() => {
-    const getAuctionStatus = async () => {
-      const results = await fetch();
-      try {
-        const auctionState = results[0].attributes.started;
-        setIsAuctionActive(auctionState);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getAuctionStatus();
-  }, [fetch]);
+    setAuctionStatus();
+  }, [data]);
+
+  const setAuctionStatus = async () => {
+    if (data.length !== 0) {
+      setIsAuctionActive(true);
+    } else {
+      setIsAuctionActive(false);
+    }
+  };
 
   return (
-    <>
-      <div className='main-container'>
-        {isAuctionActive ? <LiveAuction /> : <OfflineAuction />}
-        {isAuctionActive ? <BidStatus /> : <LoggedInComp />}
-      </div>
-    </>
+    <div className="app">
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="auction">
+              <MainDisplay isLoading={isLoading} />
+              <OptionsBox isLoading={isLoading} />
+            </div>
+          }
+        ></Route>
+        <Route path="profile" element={<Profile />} />
+      </Routes>
+    </div>
   );
-};
+}
 
 export default App;

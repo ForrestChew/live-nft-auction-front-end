@@ -1,0 +1,12 @@
+.login-btn {
+  margin-right: 1rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+  color: white;
+  background-color: crimson;
+  border: none;
+  border-radius: 0.2rem;
+}
+
+.login-btn:hover {
+  cursor: pointer;
+}

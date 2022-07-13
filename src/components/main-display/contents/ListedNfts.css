@@ -1,0 +1,8 @@
+.listed-nfts-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  overflow-y: scroll;
+  height: 633px;
+}

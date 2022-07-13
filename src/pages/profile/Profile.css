@@ -1,0 +1,38 @@
+.outer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10rem;
+}
+
+.balance-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  padding: 2rem 2rem 2rem 2rem;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  word-break: break-all;
+  background-color: #44403c;
+  border: 2px solid white;
+}
+
+.btn {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  margin: 1rem 1rem 1rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  background-color: crimson;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: antiquewhite;
+  color: black;
+}
+
+.btn:active {
+  background-color: black;
+  color: white;
+}

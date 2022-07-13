@@ -1,0 +1,12 @@
+.main-display {
+  grid-column-start: 2;
+  border: 2px solid white;
+  background-color: #44403c;
+  height: 637px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 12rem;
+}
