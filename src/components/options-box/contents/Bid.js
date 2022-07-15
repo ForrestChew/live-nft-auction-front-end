@@ -1,94 +1,58 @@
-import { useState, useEffect, useContext } from "react";
-import { useMoralisQuery } from "react-moralis";
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
+import { getActiveNft } from "../../../helpers/contract-interactions/read-functions";
+import { placeBidOnNft } from "../../../helpers/contract-interactions/write-functions";
 import ReactLoading from "react-loading";
-import { useContractInteractions } from "../../../hooks/useContractInteractions";
-import { UserContext } from "../../../UserProvider";
 import "./contents.css";
 
 const Bid = () => {
-  const [bid, setBid] = useState(0);
+  const [isTableLoading, setIsTableLoading] = useState(true);
 
-  const [activeNft, setActiveNft] = useState({
-    nftFactoryAddr: "",
-    bidAmount: 0,
-    nftId: "",
-    highestBidderAddr: "",
-    nftSeller: "",
-  });
+  const [bidAmount, setBidAmount] = useState(0);
 
-  const [authedUser] = useContext(UserContext);
-
-  // Gets info on the NFT listing that was listed first to the auction smart contract.
-  const { data, fetch, isLoading } = useMoralisQuery(
-    "listedNfts",
-    (query) => query.ascending("createdAt").limit(1),
-    [],
-    { live: true }
-  );
+  const [activeNft, setActiveNft] = useState(new Array(9).fill(0));
 
   useEffect(() => {
-    try {
-      const { tokenFactoryAddr, price, tokenId, highestBidder, seller } =
-        data[0].attributes;
-      setActiveNft({
-        nftFactoryAddr: tokenFactoryAddr,
-        bidAmount: price,
-        nftId: tokenId,
-        highestBidderAddr: highestBidder,
-        nftSeller: seller,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }, [data]);
+    const setActiveNftData = async () => {
+      setActiveNft(await getActiveNft());
+    };
+    setActiveNftData();
+    setTimeout(() => {
+      setIsTableLoading(false);
+    }, 250);
+  }, []);
 
-  // Sets the amount stored in a state variable that a user wants to place
-  // on an NFT.
+  const submitBidForm = (e) => {
+    e.preventDefault();
+    placeBidOnNft(bidAmount);
+  };
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    setBid(inputValue);
-  };
-
-  // Updates both the listing price and highest bidder address.
-  const updateListing = async () => {
-    await fetch({
-      onSuccess: (listing) => {
-        listing[0].set("price", bid);
-        listing[0].set("highestBidder", authedUser.userAddr);
-        listing[0].save().then(() => console.log("New Bid Success"));
-      },
-    });
-  };
-
-  const { placeBidOnNft } = useContractInteractions();
-
-  // Updates NFT listing with new bid info.
-  const submitForm = (e) => {
-    e.preventDefault();
-    placeBidOnNft(bid).then(() => {
-      updateListing();
-    });
+    setBidAmount(inputValue);
   };
 
   return (
     <>
-      {isLoading ? (
+      {isTableLoading ? (
         <div className="loading">
           <ReactLoading type="cylon" color="white" width="10rem" />
         </div>
       ) : (
         <div>
-          <form className="form" onSubmit={submitForm}>
+          <form className="form" onSubmit={submitBidForm}>
             <label>
               <p className="form-title">Place Bid</p>
               <input
                 className="input-box"
                 type="number"
-                value={bid}
+                value={bidAmount}
                 onChange={handleInputChange}
-                placeholder={`${activeNft.bidAmount} Matic`}
+                placeholder={`${parseInt(
+                  ethers.utils.formatEther(activeNft[1])
+                )} Matic`}
                 step=".01"
-                min={activeNft.bidAmount}
+                min={parseInt(activeNft[1])}
                 required
               />
             </label>
@@ -103,26 +67,26 @@ const Bid = () => {
             <thead>
               <tr>
                 <th>Current Price:</th>
-                <th>{`${activeNft.bidAmount} Matic`}</th>
+                <th>{`${ethers.utils.formatEther(activeNft[1])} Matic`}</th>
               </tr>
               <tr>
                 <th>Token ID</th>
-                <th>{activeNft.nftId}</th>
+                <th>{parseInt(activeNft[0])}</th>
               </tr>
               <tr>
                 <th>NFT Factory address</th>
-                <th>{activeNft.nftFactoryAddr}</th>
+                <th>{activeNft[5]}</th>
               </tr>
               <tr>
                 <th>NFT Seller</th>
-                <th>{activeNft.nftSeller}</th>
+                <th>{activeNft[6]}</th>
               </tr>
               <tr>
                 <th>Highest Bidder</th>
                 <th>
-                  {activeNft.highestBidderAddr === "0x".padEnd(42, "0")
+                  {activeNft[8] === "0x".padEnd(42, "0")
                     ? "No bids yet"
-                    : activeNft.highestBidderAddr}
+                    : activeNft[8]}
                 </th>
               </tr>
             </thead>

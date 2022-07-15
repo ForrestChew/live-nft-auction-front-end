@@ -1,17 +1,15 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../../UserProvider";
-import { useContractInteractions } from "../../../hooks/useContractInteractions";
+import { listNftForAuction } from "../../../helpers/contract-interactions/write-functions";
 import "./contents.css";
 
 const ListNfts = () => {
   const [authedUser] = useContext(UserContext);
-  const { listNFTForAuction } = useContractInteractions();
 
   const [nftListing, setNftListing] = useState({
     tokenFactoryAddr: "",
     tokenId: "",
     startingPrice: "",
-    nftSeller: "",
   });
 
   // Populates the nftListing object with user input.
@@ -24,13 +22,14 @@ const ListNfts = () => {
     });
   };
 
-  // Calls hook that interacts with smart contract on form submission.
   const submitForm = (e) => {
     e.preventDefault();
-    // Confirms that user is connected to auction dapp with Metamask.
     if (authedUser.isAuthed) {
-      // Passes nftListing object. The hook will destructure the obj.
-      listNFTForAuction(nftListing);
+      listNftForAuction(
+        nftListing.tokenFactoryAddr,
+        nftListing.tokenId,
+        nftListing.startingPrice
+      );
     } else {
       alert("Please sign in with Metamask");
     }
@@ -76,7 +75,7 @@ const ListNfts = () => {
               name="startingPrice"
               onChange={handleInputChange}
               value={nftListing.startingPrice}
-              placeholder="0.00 ETH"
+              placeholder="0.00 Matic"
               step=".01"
               min="0"
               required

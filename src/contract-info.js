@@ -1,4 +1,4 @@
-export const contractAddress = "0x7df88493fBeB6cAE40A400AD2F06673a10f61d14";
+export const contractAddress = "0xDccd679d62BF9B35c4c72DD91754e7CE486AE7Bb";
 
 export const contractAbi = [
   {
@@ -171,6 +171,11 @@ export const contractAbi = [
     outputs: [
       {
         internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
         name: "currentPrice",
         type: "uint256",
       },
@@ -188,6 +193,11 @@ export const contractAbi = [
         internalType: "bool",
         name: "isAuctioning",
         type: "bool",
+      },
+      {
+        internalType: "address",
+        name: "tokenfactoryAddr",
+        type: "address",
       },
       {
         internalType: "address",
@@ -284,6 +294,66 @@ export const contractAbi = [
     name: "disableAuction",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getActiveNFT",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "tokenId",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "currentPrice",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "timeStart",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "listedForAuction",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "isAuctioning",
+            type: "bool",
+          },
+          {
+            internalType: "address",
+            name: "tokenfactoryAddr",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "seller",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "owner",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "bidLeader",
+            type: "address",
+          },
+        ],
+        internalType: "struct LiveNftAuction.AuctionListing",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

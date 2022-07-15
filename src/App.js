@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useMoralisQuery } from "react-moralis";
+import { getAuctionState } from "./helpers/contract-interactions/read-functions";
 import { AuctionContext } from "./AuctionProvider";
 import Navbar from "./components/navbar/Navbar";
 import OptionsBox from "./components/options-box/OptionsBox";
@@ -11,24 +11,12 @@ import "./App.css";
 function App() {
   const [isAuctionActive, setIsAuctionActive] = useContext(AuctionContext);
 
-  // Gets the data from the "auctionStatus" class within the Moralis DB.
-  const { data, isLoading } = useMoralisQuery("auctionStatus", (q) => q, [], {
-    onCreate: () => setAuctionStatus(),
-    onDelete: () => setAuctionStatus(),
-    live: true,
-  });
-
   useEffect(() => {
-    setAuctionStatus();
-  }, [data]);
-
-  const setAuctionStatus = async () => {
-    if (data.length !== 0) {
-      setIsAuctionActive(true);
-    } else {
-      setIsAuctionActive(false);
-    }
-  };
+    const setAuctionState = async () => {
+      setIsAuctionActive(await getAuctionState());
+    };
+    setAuctionState();
+  }, []);
 
   return (
     <div className="app">
@@ -38,8 +26,8 @@ function App() {
           path="/"
           element={
             <div className="auction">
-              <MainDisplay isLoading={isLoading} />
-              <OptionsBox isLoading={isLoading} />
+              <MainDisplay />
+              <OptionsBox />
             </div>
           }
         ></Route>

@@ -1,7 +1,12 @@
+import { useContext } from "react";
 import { useMoralis } from "react-moralis";
+import { UserContext } from "../UserProvider";
+import { useMutateDatabase } from "./useMutateDatabase";
 import { contractAddress, contractAbi } from "../contract-info";
 
 export const useContractInteractions = () => {
+  const [authedUser] = useContext(UserContext);
+
   const { Moralis } = useMoralis();
 
   // Enables users to list an NFT for auction. This hook will call
@@ -25,6 +30,18 @@ export const useContractInteractions = () => {
     await Moralis.executeFunction(listNftOptions);
   };
 
+  const listedNftData = useMutateDatabase("listedNfts");
+
+  const updateListing = async (currentBidPrice) => {
+    await listedNftData.fetch({
+      onSuccess: (listing) => {
+        listing[0].set("price", currentBidPrice);
+        listing[0].set("highestBidder", authedUser.userAddr);
+        listing[0].save().then(() => console.log("New Bid Success"));
+      },
+    });
+  };
+
   // Enables users to bid on the current auctioning NFT. This hook
   // will call the "placeBid" function on the auction smart contract.
   const placeBidOnNft = async (currentBidPrice) => {
@@ -35,7 +52,9 @@ export const useContractInteractions = () => {
       functionName: "placeBid",
       msgValue: Moralis.Units.ETH(currentBidPrice),
     };
-    await Moralis.executeFunction(placeBidOptions);
+    await Moralis.executeFunction(placeBidOptions).then(() => {
+      updateListing(currentBidPrice);
+    });
   };
 
   // Enables users to withdraw any funds they may have held within

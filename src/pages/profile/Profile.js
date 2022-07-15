@@ -1,29 +1,24 @@
 import { useState, useEffect, useContext } from "react";
-import { useMoralis } from "react-moralis";
+import { ethers } from "ethers";
 import { UserContext } from "../../UserProvider";
-import { useContractInteractions } from "../../hooks/useContractInteractions";
+import { getUserBalInContract } from "../../helpers/contract-interactions/read-functions";
+import { withdrawFunds } from "../../helpers/contract-interactions/write-functions";
 import "./Profile.css";
 
 const Profile = () => {
   const [userContractBal, setUserContractBal] = useState(0);
   const [authedUser] = useContext(UserContext);
-  const { withdrawFunds, getUserContractBalance } = useContractInteractions();
-
-  const { Moralis } = useMoralis();
 
   useEffect(() => {
     setsUserContractBalance();
-  }, [authedUser]);
+  }, [authedUser, withdrawFunds]);
 
-  // Sets the balance that the authed user has in auction smart contract.
   const setsUserContractBalance = async () => {
     try {
       if (authedUser.isAuthed)
         setUserContractBal(
-          Number(
-            Moralis.Units.FromWei(
-              await getUserContractBalance(authedUser.userAddr)
-            )
+          ethers.utils.formatEther(
+            await getUserBalInContract(authedUser.userAddr)
           )
         );
     } catch (e) {
@@ -31,7 +26,6 @@ const Profile = () => {
     }
   };
 
-  // Calls withdral function on smart contract and resets the balance on successfull withdrawl.
   const widthdraw = () => {
     if (authedUser.isAuthed) {
       withdrawFunds().then(() => {

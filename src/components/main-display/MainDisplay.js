@@ -6,7 +6,7 @@ import ListedNfts from "./contents/ListedNfts";
 import "./MainDisplay.css";
 
 const MainDisplay = ({ isLoading }) => {
-  const [isAuctionActive, setIsAuctionActive] = useContext(AuctionContext);
+  const [isAuctionActive] = useContext(AuctionContext);
 
   return (
     <div className="main-display">
