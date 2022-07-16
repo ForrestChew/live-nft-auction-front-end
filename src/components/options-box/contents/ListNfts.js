@@ -1,18 +1,16 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../../UserProvider";
-import { listNftForAuction } from "../../../helpers/contract-interactions/write-functions";
+import { listNftForAuction } from "../../../helpers/write-functions";
 import "./contents.css";
 
 const ListNfts = () => {
   const [authedUser] = useContext(UserContext);
-
   const [nftListing, setNftListing] = useState({
     tokenFactoryAddr: "",
     tokenId: "",
     startingPrice: "",
   });
 
-  // Populates the nftListing object with user input.
   const handleInputChange = (e) => {
     const inputName = e.target.name;
     const inputValue = e.target.value;

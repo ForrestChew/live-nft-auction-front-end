@@ -1,7 +1,8 @@
-import { useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import { getAuctionState } from "./helpers/contract-interactions/read-functions";
+import { getAuctionState } from "./helpers/read-functions";
 import { AuctionContext } from "./AuctionProvider";
+import { getReadOnlyAuctionInstance } from "./helpers/utils";
 import Navbar from "./components/navbar/Navbar";
 import OptionsBox from "./components/options-box/OptionsBox";
 import MainDisplay from "./components/main-display/MainDisplay";
@@ -12,11 +13,23 @@ function App() {
   const [isAuctionActive, setIsAuctionActive] = useContext(AuctionContext);
 
   useEffect(() => {
-    const setAuctionState = async () => {
-      setIsAuctionActive(await getAuctionState());
-    };
     setAuctionState();
   }, []);
+
+  const setAuctionState = async () => {
+    setIsAuctionActive(await getAuctionState());
+  };
+
+  const auction = getReadOnlyAuctionInstance();
+
+  useEffect(() => {
+    auction.on("AuctionStatus", () => {
+      setAuctionState();
+    });
+    return () => auction.removeListener("AuctionStatus");
+  }, []);
+
+  console.log(isAuctionActive);
 
   return (
     <div className="app">

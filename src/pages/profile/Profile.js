@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { ethers } from "ethers";
 import { UserContext } from "../../UserProvider";
-import { getUserBalInContract } from "../../helpers/contract-interactions/read-functions";
-import { withdrawFunds } from "../../helpers/contract-interactions/write-functions";
+import { getUserBalInContract } from "../../helpers/read-functions";
+import { withdrawFunds } from "../../helpers/write-functions";
 import "./Profile.css";
 
 const Profile = () => {

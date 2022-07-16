@@ -1,30 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ethers } from "ethers";
-import { getActiveNft } from "../../../helpers/contract-interactions/read-functions";
-import { placeBidOnNft } from "../../../helpers/contract-interactions/write-functions";
+import { getActiveNft } from "../../../helpers/read-functions";
+import { placeBidOnNft } from "../../../helpers/write-functions";
+import { getReadOnlyAuctionInstance } from "../../../helpers/utils";
+import { UserContext } from "../../../UserProvider";
 import ReactLoading from "react-loading";
 import "./contents.css";
 
 const Bid = () => {
+  const [authedUser] = useContext(UserContext);
   const [isTableLoading, setIsTableLoading] = useState(true);
-
   const [bidAmount, setBidAmount] = useState(0);
-
   const [activeNft, setActiveNft] = useState(new Array(9).fill(0));
 
   useEffect(() => {
-    const setActiveNftData = async () => {
-      setActiveNft(await getActiveNft());
-    };
     setActiveNftData();
     setTimeout(() => {
       setIsTableLoading(false);
     }, 250);
   }, []);
 
+  const setActiveNftData = async () => {
+    setActiveNft(await getActiveNft());
+  };
+
+  const auction = getReadOnlyAuctionInstance();
+
+  useEffect(() => {
+    auction.on("NewBid", () => {
+      setActiveNftData();
+    });
+    return () => auction.removeListener("NewBid");
+  }, []);
+
   const submitBidForm = (e) => {
     e.preventDefault();
-    placeBidOnNft(bidAmount);
+    if (authedUser.isAuthed) {
+      placeBidOnNft(bidAmount);
+    } else {
+      alert("Please sign in with Metamask");
+    }
   };
 
   const handleInputChange = (e) => {
@@ -52,7 +67,7 @@ const Bid = () => {
                   ethers.utils.formatEther(activeNft[1])
                 )} Matic`}
                 step=".01"
-                min={parseInt(activeNft[1])}
+                min={ethers.utils.formatEther(activeNft[1])}
                 required
               />
             </label>

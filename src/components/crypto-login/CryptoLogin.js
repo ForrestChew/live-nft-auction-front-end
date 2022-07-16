@@ -1,9 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { ethers } from "ethers";
-import {
-  getProvider,
-  getSigner,
-} from "../../helpers/contract-interactions/utils";
+import { getProvider } from "../../helpers/utils";
+import { useUser } from "../../hooks/useUser";
 import { UserContext } from "../../UserProvider";
 import "./CryptoLogin.css";
 
@@ -23,7 +21,7 @@ const CryptoLogin = () => {
     } else {
       setShortenedBal("");
     }
-  }, [authedUser]);
+  }, [authedUser, setAuthedUser]);
 
   useEffect(() => {
     if (authedUser.isAuthed) {
@@ -38,28 +36,20 @@ const CryptoLogin = () => {
     }
   }, [authedUser]);
 
-  const updateUser = async () => {
-    const signerAddr = await getSigner().getAddress();
-    const signerBal = await getSigner().getBalance();
-    setAuthedUser({
-      userAddr: signerAddr,
-      userBal: Number(signerBal),
-      isAuthed: true,
-    });
-  };
+  const { setUser } = useUser();
 
   const login = async () => {
     document.getElementById("login-btn").disabled = true;
     await getProvider()
       .send("eth_requestAccounts", [])
       .then(() => {
-        updateUser();
+        setUser();
       });
     document.getElementById("login-btn").disabled = false;
   };
 
   window.ethereum.on("accountsChanged", () => {
-    setAuthedUser(updateUser());
+    setAuthedUser(setUser());
   });
 
   const toggleBalDisplay = () => {
