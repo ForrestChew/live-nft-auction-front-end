@@ -9,4 +9,11 @@
 
 .login-btn:hover {
   cursor: pointer;
+  background-color: antiquewhite;
+  color: black;
+}
+
+.login-btn:active {
+  background-color: black;
+  color: white;
 }

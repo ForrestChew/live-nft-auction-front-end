@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getAuctionState } from "./helpers/read-functions";
 import { AuctionContext } from "./AuctionProvider";
@@ -28,8 +28,6 @@ function App() {
     });
     return () => auction.removeListener("AuctionStatus");
   }, []);
-
-  console.log(isAuctionActive);
 
   return (
     <div className="app">

@@ -28,9 +28,7 @@ const Profile = () => {
 
   const widthdraw = () => {
     if (authedUser.isAuthed) {
-      withdrawFunds().then(() => {
-        setsUserContractBalance();
-      });
+      withdrawFunds();
     } else {
       alert("Please Login");
     }

@@ -1,0 +1,6 @@
+{
+  "singleQuote": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
