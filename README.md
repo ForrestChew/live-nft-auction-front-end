@@ -7,17 +7,11 @@ The Live NFT Auction enables users to auction their NFTs off in an auction that 
 | Main Usage                         | Auction State |
 | ---------------------------------- | ------------- |
 | List NFTs for auction              | Inactive      |
-| ---------------------------------- | ------------- |
 | View all NFTs listed for auction   | Inactive      |
-| ---------------------------------- | ------------- |
 | Claim funds from sold NFTs         | Inactive      |
-| ---------------------------------- | ------------- |
 | Reclaim funds on losing NFT bids   | Inactive      |
-| ---------------------------------- | ------------- |
 | Watch a live stream of the auction | Active        |
-| ---------------------------------- | ------------- |
 | Bid on NFTs                        | Active        |
-| ---------------------------------- | ------------- |
 
 ## Project Requirements
 
