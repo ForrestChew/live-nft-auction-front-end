@@ -13,7 +13,7 @@ const LivePlayer = () => {
       />
       <p className="video-player-paragraph">
         Live NFT Auction Contract Address:
-        0xDccd679d62BF9B35c4c72DD91754e7CE486AE7Bb
+        0x31bd425DF4AAB96CD93BAad1206AcDE92DB727D3
       </p>
     </div>
   );

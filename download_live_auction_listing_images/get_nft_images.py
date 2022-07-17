@@ -1,29 +1,25 @@
 import os
 import time
-import sys
 import requests
 import ssl
 from http.client import RemoteDisconnected
 from urllib import request
 from web3 import Web3
 from dotenv import load_dotenv
-if 'nft_marketplace_info' not in sys.path:
-    sys.path.append('nft_marketplace_info')
-import contract_abi
+from contract_abi import abi
 load_dotenv()
 
 
-provider = os.getenv('ALCHEMY_PROVIDER_URL')
+provider = os.getenv('PROVIDER_URL')
 w3 = Web3(Web3.HTTPProvider(provider))
 
-# Add Auction smart contract address:
-NFT_MARKETPLACE_ADDRESS = ''
-CONTRACT_ABI = contract_abi.abi
-CONTRACT_INSTANCE = w3.eth.contract(address=NFT_MARKETPLACE_ADDRESS, abi=CONTRACT_ABI)
+LIVE_AUCTION_ADDRESS = os.getenv('LIVE_AUCTION_ADDRESS')
+CONTRACT_ABI = abi
+CONTRACT_INSTANCE = w3.eth.contract(address=LIVE_AUCTION_ADDRESS, abi=CONTRACT_ABI)
 IMAGE_URL_TEXT_FILE = 'urls/image_urls.txt'
 
 # Set start_block var to preferred blocknumber
-start_block = 10579055
+start_block = 0
 EVENT_FILTER = CONTRACT_INSTANCE.events.NftForAuction.createFilter(
     fromBlock=start_block
 )   

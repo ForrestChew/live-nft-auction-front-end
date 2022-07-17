@@ -17,7 +17,7 @@ const listNftsOnAuction = async () => {
   const auction = await getAuctionContractInstance();
   let tokenId = 1;
   let startingPrice = 1;
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 3; i++) {
     const tx = await auction.listNftForAuction(
       nftFactoryAddr,
       tokenId,
@@ -56,7 +56,7 @@ const checkActiveNftStatus = async () => {
   await txReceipt.wait(3);
   console.log(txReceipt);
 };
-endAuction()
+listNftsOnAuction()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);

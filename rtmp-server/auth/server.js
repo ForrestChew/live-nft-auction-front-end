@@ -4,7 +4,7 @@ const app = express();
 app.use(express.urlencoded());
 app.post("/auth", (req, res) => {
   const streamKey = req.body.key;
-  if (streamKey === "hola") {
+  if (streamKey === "test") {
     res.status(200).send();
     return;
   }

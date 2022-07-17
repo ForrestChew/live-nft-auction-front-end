@@ -9,8 +9,7 @@ const MainDisplay = () => {
 
   return (
     <div className="main-display">
-      {/* {isAuctionActive ? <LivePlayer /> : <ListedNfts />} */}
-      <LivePlayer />
+      {isAuctionActive ? <LivePlayer /> : <ListedNfts />}
     </div>
   );
 };
