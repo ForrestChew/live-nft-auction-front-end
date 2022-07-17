@@ -4,10 +4,9 @@ The Live NFT Auction enables users to auction their NFTs off in an auction that 
 
 1. _Front-end_
 
-| Main Usage | Auction State |
-| ---------- | ------------- |
-
-| List NFTs for auction while the auction smart contract's state is _inactive_.
+| Main Usage                                                                    | Auction State |
+| ----------------------------------------------------------------------------- | ------------- |
+| List NFTs for auction while the auction smart contract's state is _inactive_. |
 
 - View what NFTs are listed for auction while it is _inactive_.
 - Claim funds from sold NFTs while the auction is _inactive_.
