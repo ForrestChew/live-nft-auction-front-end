@@ -33,8 +33,8 @@ The Live NFT Auction enables users to auction their NFTs off in an auction that 
 3. **RTMP and HTTP Servers** <br>
    Allows a live stream from a third party streaming service such as OBS to be picked up by the auction front-end. Code for this portion can be found: `live-nft-auction/rtmp-server`.
 
-4. **Script for downloading NFT images** <br>
-   Enables the auction proprietors to download the image of each NFT listing before the next auction cycle begins. The image stored at the `image` field within the NFT metadata is downloaded and saved within the `live-nft-auction/download_live_auction_listing_images/nft_images` directory. These images can then be used by the auction propreitors in anyway to enhance the live stream.
+4. **Script for Downloading NFT Images** <br>
+   Enables the auction proprietors to download the image of each NFT listing before the next auction cycle begins. The image stored at the `image` field within each NFT's metadata is downloaded and saved within the `live-nft-auction/download_live_auction_listing_images/nft_images` directory. These images can then be used by the auction propreitors in anyway to enhance the live stream.
 
 ## Project Requirements
 
