@@ -13,17 +13,17 @@ The project is comprised of four parts:
 
    1. The auction's state is `INACTIVE`.
    2. The NFT being listed has not already been listed.
-   3. A small listing fee is paid. This fee can be claimed by the auciton owner.
+   3. A small listing fee is paid. This fee can be claimed by the auction owner.
 
    **Bidding on an NFT** <br>
-   When the auction starts (it's state becomes `ACTIVE`), one NFT is auctioned off at a time in the fashion of a queue. The first NFT to be listed will be the first to be bid on. Each NFT will have a duration of time in which users can bid on it (this time can be set before the aucion contract is deployed). Like listing an NFT, three conditions have to be met to succesfully place a bid: <br>
+   When the auction is `ACTIVE`, one NFT is auctioned off at a time in the fashion of a queue. The first NFT to be listed will be the first to be bid on. Each NFT will have a duration of time in which users can bid on it (this time can be set before the aucion contract is deployed). Like listing an NFT, three conditions have to be met to successfully place a bid: <br>
 
    1. The auction's state is `ACTIVE`.
    2. The NFT listing is the NFT currently auctioning.
-   3. The bid cast is greater then the current bid price.
+   3. The bid cast is greater than the current bid price.
 
    **Claiming Funds** <br>
-   There are two sinarios where a user may claim funds that are held within the auction smart contract.
+   There are two scenarios where a user may claim funds that are held within the auction smart contract. The contract must also be `INACTIVE`.
 
    1. User A was the highest bidder on an NFT that User B had listed in a previous auction. User B can then withdraw those funds.
    2. User A bid but did NOT win an NFT. User A can then re-claim their bids.
