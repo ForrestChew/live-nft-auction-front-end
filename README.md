@@ -28,10 +28,8 @@ The project is comprised of four parts:
    1. User A was the highest bidder on an NFT that User B had listed in a previous auction. User B can then withdraw those funds.
    2. User A bid but did NOT win an NFT. User A can then re-claim their bids.
 
-   These three areas make up the most important parts of the smart contract portion of the project.
-
 2. **Front-end** <br>
-   Provides a simple interface for users to interact with the auction smart contract. While the auction is `Inactive`, users have the opportunity to list any number of their NFTs for auction. Additionally, they can view all NFTs that will be up for auction in it's next cycle. They are also able withdraw funds that are stored within the contract. While the auction is `Active`, users can bid on individual NFTs in addition to watching a live stream of the auction, hosted by the auction maintainers/proprietors. The contents of the live stream are completely up to the auction owner's, but a scripts is also provided in this repo to download all images associated with the NFTs listed for auction.
+   Provides an interface to interact with the auction smart contract. While the auction is `INACTIVE`, users have the ability list their NFTs in addition to viewing all NFTs that have been listed. While the auction is `ACTIVE`, users can bid on individual NFTs, while simultaneously watching a live stream of the auction, hosted by it's maintainers. The contents of the live stream are up to the maintainers.
 
 3. **RTMP and HTTP Servers** <br>
    Allows a live stream from a third party streaming service such as OBS to be picked up by the auction front-end. Code for this portion can be found: `live-nft-auction/rtmp-server`.
