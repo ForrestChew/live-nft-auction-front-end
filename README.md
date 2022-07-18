@@ -107,7 +107,7 @@ npm start
 Here is a simple video demonstration as that is more effective than screenshots and text: <br>
 https://www.youtube.com/watch?v=oLpJQzVwIOI <br>
 
-5. **testing** <br>
+5. **Testing** <br>
    To test the auction smart contract, run:
 
 ```
