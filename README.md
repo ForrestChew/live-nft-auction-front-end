@@ -1,6 +1,7 @@
 # Live NFT Auction Summary
 
-The Live NFT Auction enables users to auction off their NFTs in a live streamed event, with the responsibility of the project's maintainers to host the live stream however they see fit. <br>
+The Live NFT Auction enables users to auction off their NFTs in a live streamed event, with the responsibility of the project's maintainers to host the live stream however they see fit.
+<br>
 The project is comprised of four main parts.
 
 1. **Auction Smart Contract** <br>
