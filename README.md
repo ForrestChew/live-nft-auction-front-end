@@ -29,13 +29,13 @@ The project is comprised of four parts:
    2. User A bid but did NOT win an NFT. User A can then re-claim their bids.
 
 2. **Front-end** <br>
-   Provides an interface to interact with the auction smart contract. While the auction is `INACTIVE`, users have the ability list their NFTs in addition to viewing all NFTs that have been listed. While the auction is `ACTIVE`, users can bid on individual NFTs, while simultaneously watching a live stream of the auction, hosted by it's maintainers. The contents of the live stream are up to the maintainers.
+   Provides an interface to interact with the auction smart contract. While the auction is `INACTIVE`, users have the ability list their NFTs in addition to viewing all NFTs that have been listed. While the auction is `ACTIVE`, users can bid on the individual NFTs, while simultaneously watching a live stream of the auction, hosted by it's maintainers. The contents of the live stream are up to the maintainers.
 
 3. **RTMP and HTTP Servers** <br>
    Allows a live stream from a third party streaming service such as OBS to be picked up by the auction front-end. Code for this portion can be found: `live-nft-auction/rtmp-server`.
 
 4. **Script for Downloading NFT Images** <br>
-   Enables the auction proprietors to download the image of each NFT listing before the next auction cycle begins. The image stored at the `image` field within each NFT's metadata is downloaded and saved within the `live-nft-auction/download_live_auction_listing_images/nft_images` directory. These images can then be used by the auction propreitors in anyway to enhance the live stream.
+   Enables the auction's proprietors/maintainers to download the image of each NFT that is listed for auction. The image found at the `image` field within each NFT's metadata is downloaded and saved within the `live-nft-auction/download_live_auction_listing_images/nft_images` directory. If they so choose, the downloaded images can then be used by the auction's propreitors to enhance their live stream.
 
 ## Project Requirements
 
