@@ -1,19 +1,19 @@
 # Live NFT Auction Summary
 
-The Live NFT Auction enables users to auction off their NFTs in a live streamed event. The the burden of responsibility to host the live stream falls upon the auction's maintainers.
+The Live NFT Auction enables users to auction off their NFTs in a live streamed event, with the burden of responsibility to host the live stream falling upon the auction's maintainers.
 <br>
 <br>
-The project is comprised of four main parts:
+The project is comprised of four parts:
 
 1. **Auction Smart Contract** <br>
-   The immutable code that supports the auction. The functions found within this smart contract are what ultamitley get called by the front-end. The contract has two states, `INACTIVE` and `ACTIVE`. The `INACTIVE` state exposes functionality related to listing NFTs and withrawing funds while the `ACTIVE` state exposes functionality directly related to bidding on the NFTs. <br>
+   Immutable code that supports the auction. The functions found within this contract are what ultamitley get called by the front-end. The contract has two states, `INACTIVE` and `ACTIVE`. The `INACTIVE` state exposes functionality related to listing NFTs and withrawing funds, while the `ACTIVE` state exposes functionality directly related to actually bidding on the NFT listings. <br>
 
    **Listing an NFT** <br>
-   When an NFT is listed, the ownership of it is transfered to the smart contract. This was done to prevent bad actors from listing their NFT, then selling it elsewhere. The user must also satisfy three requirements for their NFT to be successfully listed: <br>
+   When an NFT is listed, the tokens ownership is transfered to the smart contract. This was done to prevent bad actors from listing their NFT, then selling it elsewhere. The user must also satisfy three requirements for their NFT to be successfully listed: <br>
 
    1. The auction's state is `INACTIVE`.
    2. The NFT being listed has not already been listed.
-   3. A small listing fee is paid. This fee can then be withdrawn by the auction smart contract owner address.
+   3. A small listing fee is paid. This fee can be claimed by the auciton owner.
 
    **Bidding on an NFT** <br>
    When the auction starts (it's state becomes `ACTIVE`), one NFT is auctioned off at a time in the fashion of a queue. The first NFT to be listed will be the first to be bid on. Each NFT will have a duration of time in which users can bid on it (this time can be set before the aucion contract is deployed). Like listing an NFT, three conditions have to be met to succesfully place a bid: <br>
