@@ -66,7 +66,7 @@ npm install
    `POLYGONSCAN_API_KEY=XXXXXXXXXXXXXXX..........` Used to verify contracts. <br>
    `AUCTION_OWNER_ADDR=0x0000......` The address you want to make the auction owner. <br>
    `LIVE_AUCTION_ADDR=` Once your auction contract is deployed, add it's address here. <br>
-   `NFT_FACTORY_ADDR=` These setup steps assume you are familiar with NFTs, so if you would like to use the NFT contract in this project, add it's address here after deplyment. If you are using your own NFT contract, make sure to approve the auction's contract address before listing it. <br>
+   `NFT_FACTORY_ADDR=` These setup steps assume you are familiar with NFTs, so if you would like to use the NFT contract provided in this repo, add it's address here after deplyment. If you are using your own NFT contract, make sure to approve the auction's contract address before listing an NFT. <br>
    Create a second .env file in the `live-nft-auction/download_live_auction_listing_images` directory and add: <br>
    `WEB3_PROJECT_ID=https://polygon-mumbai.g.alchemy.com/v2/xxxxxxx.........` <br>
    `LIVE_AUCTION_ADDR=` Once your auction contract is deployed, add it's address here. <br>
@@ -85,7 +85,6 @@ If you want to deploy the NFT factory contract, run:
 npx hardhat run scripts/nft-factory-scripts/deploy-factory.js --network mumbai
 ```
 
-Add to .env file if applicable. <br>
 To verify your auction smart contract, run:
 
 ```
@@ -103,18 +102,4 @@ npx hardhat verify <NFT_FACTORY_ADDR> "LiveAuct" "LA" --network mumbai
 
 ```
 npm start
-```
-
-Once the front-end has open, use the login button to connect your metamask. After you have logged in, you are free to list NFTs. If you would like to automatically create and list NFTs, run:
-
-```
-npx hardhat run scripts/nft-factory-scripts/nft-factory-interactions.js --network mumbai
-```
-
-Some adjustments to the script may need adjusting depending on NFT factory address you are minting from.
-
-To programmatically list the NFTs, run:
-
-```
-npx hardhat run scripts/live-auction-scripts/live-auction-interactions.js --network mumbai
 ```
