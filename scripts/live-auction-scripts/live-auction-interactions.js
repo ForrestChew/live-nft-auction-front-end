@@ -17,7 +17,7 @@ const listNftsOnAuction = async () => {
   const auction = await getAuctionContractInstance();
   let tokenId = 1;
   let startingPrice = 1;
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= 6; i++) {
     const tx = await auction.listNftForAuction(
       nftFactoryAddr,
       tokenId,

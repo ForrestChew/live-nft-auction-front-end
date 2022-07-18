@@ -10,7 +10,7 @@ from contract_abi import abi
 load_dotenv()
 
 
-provider = os.getenv('PROVIDER_URL')
+provider = os.getenv('WEB3_PROJECT_ID')
 w3 = Web3(Web3.HTTPProvider(provider))
 
 LIVE_AUCTION_ADDRESS = os.getenv('LIVE_AUCTION_ADDRESS')

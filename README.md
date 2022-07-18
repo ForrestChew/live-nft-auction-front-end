@@ -48,3 +48,73 @@ The project is comprised of four parts:
 - Streaming software - OBS works well and is open source - https://obsproject.com/
 
 ## Project Setup and Deployment Steps
+
+This demonstration is done on the Mumbai network, but any EVM compatible blockchain will work.
+
+1. **Install Dependencies** <br>
+
+```
+npm install
+```
+
+2. **Create .env Files** <br>
+   Create a .env file in the root directory and add the following fields: <br>
+   `REACT_APP_MORALIS_SERVER_URL=xxxxxxxxxxx.............` https://moralis.io/ <br>
+   `REACT_APP_MORALIS_APP_ID=xxxxxxxxxxxx................` https://moralis.io/ <br>
+   `WEB3_PROJECT_ID=https://polygon-mumbai.g.alchemy.com/v2/xxxxxxx.........` Provider API <br>
+   `PRIVATE_KEY=0x0000.......` <br>
+   `POLYGONSCAN_API_KEY=XXXXXXXXXXXXXXX..........` Used to verify contracts. <br>
+   `AUCTION_OWNER_ADDR=0x0000......` The address you want to make the auction owner. <br>
+   `LIVE_AUCTION_ADDR=` Once your auction contract is deployed, add it's address here. <br>
+   `NFT_FACTORY_ADDR=` These setup steps assume you are familiar with NFTs, so if you would like to use the NFT contract in this project, add it's address here after deplyment. If you are using your own NFT contract, make sure to approve the auction's contract address before listing it. <br>
+   Create a second .env file in the `live-nft-auction/download_live_auction_listing_images` directory and add: <br>
+   `WEB3_PROJECT_ID=https://polygon-mumbai.g.alchemy.com/v2/xxxxxxx.........` <br>
+   `LIVE_AUCTION_ADDR=` Once your auction contract is deployed, add it's address here. <br>
+
+3. **Deploy and Verify Smart Contracts** <br>
+   To Deploy the Auction smart contract, run:
+
+```
+npx hardhat run scripts/live-auction-scripts/deploy-auction.js --network mumbai
+```
+
+When the address appears in the terminal, don't forget to add it to the .env files. <br>
+If you want to deploy the NFT factory contract, run:
+
+```
+npx hardhat run scripts/nft-factory-scripts/deploy-factory.js --network mumbai
+```
+
+Add to .env file if applicable. <br>
+To verify your auction smart contract, run:
+
+```
+npx hardhat verify <LIVE_AUCTION_ADDR> "<AUCTION_OWNER_ADDR>" "10000000000000000" --network mumbai
+```
+
+To verify your NFT factory contract if applicable, run:
+
+```
+npx hardhat verify <NFT_FACTORY_ADDR> "LiveAuct" "LA" --network mumbai
+```
+
+4. **Start front-end**
+   Add your auction smart contracts address to `live-nft-auction/src/contract-info.js`, then run:
+
+```
+npm start
+```
+
+Once the front-end has open, use the login button to connect your metamask. After you have logged in, you are free to list NFTs. If you would like to automatically create and list NFTs, run:
+
+```
+npx hardhat run scripts/nft-factory-scripts/nft-factory-interactions.js --network mumbai
+```
+
+Some adjustments to the script may need adjusting depending on NFT factory address you are minting from.
+
+To programmatically list the NFTs, run:
+
+```
+npx hardhat run scripts/live-auction-scripts/live-auction-interactions.js --network mumbai
+```
