@@ -31,7 +31,7 @@ The Live NFT Auction enables users to auction their NFTs off in an auction that 
    Provides a simple interface for users to interact with the auction smart contract. While the auction is `Inactive`, users have the opportunity to list any number of their NFTs for auction. Additionally, they can view all NFTs that will be up for auction in it's next cycle. They are also able withdraw funds that are stored within the contract. While the auction is `Active`, users can bid on individual NFTs in addition to watching a live stream of the auction, hosted by the auction maintainers/proprietors. The contents of the live stream are completely up to the auction owner's, but a scripts is also provided in this repo to download all images associated with the NFTs listed for auction.
 
 3. **RTMP and HTTP Servers** <br>
-   Allows the auction proprietors to feed a stream from a third party streaming service such as OBS into the auction front-end.
+   Allows a live stream from a third party streaming service such as OBS to be picked up by the auction front-end. Code for this portion can be found: `live-nft-auction/rtmp-server`.
 
 4. **Script for downloading NFT images** <br>
    Enables the auction proprietors to download the image of each NFT listing before the next auction cycle begins. The image stored at the `image` field within the NFT metadata is downloaded and saved within the `live-nft-auction/download_live_auction_listing_images/nft_images` directory. These images can then be used by the auction propreitors in anyway to enhance the live stream.
